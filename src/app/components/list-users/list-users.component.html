@@ -1,0 +1,24 @@
+
+<nz-table #basicTable [nzData]="listOfData">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Date Created</th>
+        <th>Date Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ data.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+        <td>{{ data.updatedAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+        <td>
+          <a>Edit</a>
+          <!--nz-divider nzType="vertical"></nz-divider-->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>

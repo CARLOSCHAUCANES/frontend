@@ -1,0 +1,42 @@
+<div class="container-signup">
+    <div class="container-form">
+        <h3>REGISTRO DE USUARIOS</h3>
+        <form [formGroup]="signUpFormGroup">
+          <label>
+            <input [formControl]="cedulaFormControl"  minlength="2" maxlength="15" type="text"  placeholder="Ingresa cédula"/>
+            <app-error-control  [errorCedula]="errorCedula"></app-error-control>
+          </label>
+          <label>
+            <input [formControl]="nameFormControl" type="text" placeholder="Ingresa Nombre"/>
+            <app-error-control [errorName]="errorName"></app-error-control>
+          </label>
+          <label>
+            <input [formControl]="lastNameFormControl" type="text" placeholder="Ingresa Apellido"/>
+            <app-error-control [errorLastName]="errorLastName"></app-error-control>
+          </label>
+          <label>
+            <input [formControl]="emailFormControl" type="email" placeholder="Ingresa correo electronico" #inputElement/>
+            <app-error-control [errorEmail]="errorEmail"></app-error-control>
+          </label>
+          <label>
+            <input [formControl]="phoneFormControl" type="text" placeholder="Ingresa teléfono"/>
+            <app-error-control [errorPhone]="errorPhone"></app-error-control>
+          </label>
+          <label>
+            <input [formControl]="addressFormControl" type="text" placeholder="Ingresa Dirección"/>
+          </label>
+          <label>
+            <input minlength="8" [formControl]="passwordFormControl" type="password"  placeholder="Ingresa Contraseña">
+            <app-error-control [errorPassword]="errorPassword"></app-error-control>
+          </label>
+          <label>
+            <input minlength="8" [formControl]="confirmFormControl" type="password"  placeholder="Confirmar Contraseña">
+            <app-error-control [errorConfirm]="errorConfirm"></app-error-control>
+          </label>
+          <div class="container-control">
+            <button (click)="signup()">Guardar</button>
+          </div>
+          <div class="container-control" *ngIf="activeCharging"><nz-spin nzSimple></nz-spin></div>
+          </form>
+    </div>
+</div>

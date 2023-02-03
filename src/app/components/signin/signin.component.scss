@@ -1,0 +1,34 @@
+.container-signin{
+
+}
+.container-form{
+    width: 25%;
+    margin: auto;
+    background-color:#e6f5ff;
+    border-radius: 0.3rem;
+}
+.container-control{
+    padding: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-control input{
+    width: 90%;
+    margin: auto;
+    border-radius:0.2rem;
+    border:0px;
+}
+.container-control button{
+    margin: 0.5rem;
+    width: 30%;
+    color: white;
+    background-color: #001529;
+    border-radius:0.2rem;
+}
+
+.container-control button:hover{
+    background-color: aliceblue;
+    color:#001529;
+}

@@ -1,21 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd,Event,NavigationStart } from '@angular/router';
 import { map, catchError,delay } from 'rxjs/operators';
-import { Observable, of } from 'rxjs'; 
+import { Observable, of,Subject,Subscription } from 'rxjs'; 
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { ValidationsService } from './validations.service';
+import { filter } from 'rxjs/operators';
+
+interface Permission {
+  url?:string,
+  profile?:string
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class AuthService {
   private URL = "http://localhost:3000/api";
-
+  private url:string;
+  public observePermission:Observable<Permission> = of({});
   constructor(
     private http:HttpClient,
     private router:Router,
     private validations:ValidationsService
-             ) { }
+             ) { 
+              this.url = "";
+             }
   signUp(user:any){
     return this.http.post<any>(this.URL+'/signup',user);
   }
@@ -30,6 +43,14 @@ export class AuthService {
   }
   loggedIn():boolean{ 
     return !!(localStorage.getItem("token") && localStorage.getItem("user"));
+  }
+  checkAuthorization():Observable<any>{
+    return this.http.get<any>(this.URL+'/check-authorization');
+  }
+
+  logged():boolean{
+    
+    return true;
   }
   getToken(){
     return localStorage.getItem("token");
@@ -46,5 +67,33 @@ export class AuthService {
   getListUser(){
     return this.http.get<any>(this.URL+'/list-users');
   }
-  
+   getUrl():Observable<any>{
+    return this.router.events.
+        pipe(filter(event=>event instanceof NavigationEnd));/*.subscribe((event:any)=>{
+          this.url = event['url'];
+          return this.url;
+        });*/
+   }
+
+
+   getPermission(url:string):Observable<boolean>{
+    let sProfile = JSON.parse(JSON.stringify(localStorage.getItem("user")));
+    let oProfile = JSON.parse(sProfile).profile;
+    return this.http.post<any>(this.URL+'/getPermissionByNameRoute',{route:url,profile:oProfile}).pipe(
+      map(res =>res.response?true:false)
+    );
+   }
+
+   getProfiles():Observable<any>{
+      return this.http.get<any>(this.URL+'/listActiveprofiles');
+   }
+
+   savePermission(permission:any){
+    return this.http.post<any>(this.URL+'/savePermission',permission);
+  }
+   
+   getListPermissions(){
+    return this.http.get<any>(this.URL+'/getListPermissions');
+   }
+
 }

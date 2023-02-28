@@ -32,7 +32,7 @@ export class SigninComponent implements OnInit {
     this.authService.signin(this.user).subscribe(
       res=>{ 
         if(res.status == ConfigConst.C200)
-        {
+        { 
           localStorage.setItem(ConfigConst.TOKEN,res.response.token);
           localStorage.setItem(ConfigConst.USER,JSON.stringify(res.response.user));
           this.router.navigate([ConfigConst.ROUTES.private]);

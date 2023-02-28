@@ -20,20 +20,21 @@ export class ListUsersComponent implements OnInit {
   listOfData: User[] = [];
    
   constructor(private authService:AuthService) { }
+  
 
   ngOnInit(): void {
     this.getListUsers();
-    console.log(this.listOfData);
   }
 
      getListUsers(){
      this.authService.getListUser().subscribe(
       res=>{
         this.listOfData=res.users;
-        console.log(this.listOfData);
       },
       err=>{
-        console.log(err);
+        const res = JSON.parse(JSON.stringify(err));
+        console.log(res);
+       // if(res.code == )
       }
     )
     

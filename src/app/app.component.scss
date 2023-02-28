@@ -56,3 +56,22 @@ nz-button-group {
   display: flex;
   flex-direction: row;
 }
+
+
+/*styles for forms*/
+.container-form{
+  width: 30%;
+  padding: 0.8rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color:#e6f5ff;
+  border-radius: 0.3rem;
+}
+.container-control{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem; 
+}

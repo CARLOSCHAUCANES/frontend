@@ -17,6 +17,13 @@ import { ListUsersComponent } from './components/list-users/list-users.component
 
 import { NgzorroModule } from './modules/ngzorro/ngzorro.module';
 import { UserModule } from './modules/user/user.module';
+import { MaterialModule } from './modules/material/material.module';
+
+import { TopMenuComponent } from './components/top-menu/top-menu.component';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+import { AddPermissionComponent } from './components/add-permission/add-permission.component';
+import { MainComponent } from './components/main/main.component';
+import { AccountComponent } from './components/account/account.component';
 
 
 registerLocaleData(es);
@@ -25,7 +32,11 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     NameUserComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    TopMenuComponent,
+    LeftMenuComponent,
+    MainComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +45,8 @@ registerLocaleData(es);
     HttpClientModule,
     BrowserAnimationsModule,
     NgzorroModule,
-    UserModule
+    UserModule,
+    MaterialModule
   ],
   providers: [
    AuthGuard,

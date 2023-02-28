@@ -1,0 +1,25 @@
+.container-permission{
+  width: 100%;
+
+}
+
+.container-top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container-top h3{
+  color: rgb(87, 87, 202);
+
+}
+
+.container-control{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container-control label{
+  font-weight: bold;
+}

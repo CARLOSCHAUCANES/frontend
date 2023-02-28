@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ListUsersComponent } from './list-users.component';
 
-describe('ListUsersComponent', () => {
-  let component: ListUsersComponent;
-  let fixture: ComponentFixture<ListUsersComponent>;
+import { AddPermissionComponent } from './add-permission.component';
+
+describe('AddPermissionComponent', () => {
+  let component: AddPermissionComponent;
+  let fixture: ComponentFixture<AddPermissionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListUsersComponent ]
+      declarations: [ AddPermissionComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ListUsersComponent);
+    fixture = TestBed.createComponent(AddPermissionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

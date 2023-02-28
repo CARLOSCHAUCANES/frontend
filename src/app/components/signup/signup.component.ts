@@ -9,7 +9,6 @@ import { ErrorControlComponent } from '../error-control/error-control.component'
 import { Observable } from 'rxjs';
 import { ValidationsService } from 'src/app/services/validations.service';
 import { map, catchError,delay } from 'rxjs/operators';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { ErrorService } from '../../services/error.service';
 @Component({
   selector: 'app-signup',

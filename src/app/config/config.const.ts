@@ -7,13 +7,17 @@ export class ConfigConst{
     static REQUIREDFIELD = 'Campo requerido';
     static DATASTRINGINCORRECT = 'Dato Incorrecto';
     static INVALIDDATA = 'Dato Invalido';
+    static  NOAUTHORIZATION = 'Sesión no autorizada';
+    static REGISTERSUCCESS = 'El registro se realizo  con éxito';
+    static REGISTERERROR='No se pudo realizar el registro, intentalo mas tarde';
     static C200 = 200;
     static C400 = 400; 
     static C499 = 499;
     static CERO = 0;
     static C501=501;
+    static C401 = 401;
     static ROUTES={
-        private:'/private'
+        private:'/'
     }
     static TYPENOTIFiCATION = {
         SUCCESS:'success',
@@ -31,5 +35,7 @@ export class ConfigConst{
         IDENTIFICATIONONLYNUMBER:'^([0-9])*$',
         STRINGONLYNUMBER:'[0-9]*'
     }
-
+    static NAMESNOTIFICACIONES = {
+        REGISTER:"Registro"
+    }
 }

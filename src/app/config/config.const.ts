@@ -9,13 +9,19 @@ export class ConfigConst{
     static INVALIDDATA = 'Dato Invalido';
     static  NOAUTHORIZATION = 'Sesión no autorizada';
     static REGISTERSUCCESS = 'El registro se realizo  con éxito';
+    static REGISTERUPDATE = 'La actualización se realizo con éxito';
     static REGISTERERROR='No se pudo realizar el registro, intentalo mas tarde';
     static C200 = 200;
     static C400 = 400; 
     static C499 = 499;
     static CERO = 0;
-    static C501=501;
+    static C501 = 501;
     static C401 = 401;
+    static BOTTONS = {
+        ACCEPT:'Aceptar',
+        SAVE:'Guardar',
+        UPDATE:'Actualizar'
+    }
     static ROUTES={
         private:'/'
     }
@@ -31,11 +37,12 @@ export class ConfigConst{
     static MAXLENGTHIDENTIFICATION = 15;
     static REGULAREXPRESSION = {
         NAMESWITHSPACE:'[a-zA-ZÑñÁáÉéÍíÓóÚú ]*',
-        NAMESWITHOUTSPACE:'[a-zA-ZÑñÁáÉéÍíÓóÚú ]*',
+        NAMESWITHOUTSPACE:'[a-zA-ZÑñÁáÉéÍíÓóÚú]*',
         IDENTIFICATIONONLYNUMBER:'^([0-9])*$',
         STRINGONLYNUMBER:'[0-9]*'
     }
     static NAMESNOTIFICACIONES = {
-        REGISTER:"Registro"
+        REGISTER:"Registro",
+        UPDATE:"Actualización"
     }
 }

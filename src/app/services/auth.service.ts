@@ -91,6 +91,10 @@ export class AuthService {
    savePermission(permission:any){
     return this.http.post<any>(this.URL+'/savePermission',permission);
   }
+
+  updatePermission(permission:any){
+    return this.http.post<any>(this.URL+'/updatePermission',permission);
+  }
    
    getListPermissions(){
     return this.http.get<any>(this.URL+'/getListPermissions');

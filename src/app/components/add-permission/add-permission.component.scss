@@ -13,13 +13,26 @@
   color: rgb(87, 87, 202);
 
 }
-
+//---------styles for modal--------------
 .container-control{
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.container-control label{
-  font-weight: bold;
+
+
+.container-control input,textarea{
+  border-radius: 0.3em;
+}
+
+.container-combobox{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: .8rem;
+  margin-top: .8rem;
+}
+
+.container-combobox label{
+  margin-right: .5rem;
 }

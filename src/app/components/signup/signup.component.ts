@@ -62,7 +62,6 @@ export class SignupComponent implements OnInit {
 
   public addressFormControl = new FormControl('');
 
-
   signUpFormGroup = new FormGroup({
     cedula:this.cedulaFormControl,
     name:this.nameFormControl,
@@ -86,6 +85,7 @@ export class SignupComponent implements OnInit {
   //load validation message
  validateFormSignUp(){
   if(!this.cedulaFormControl.valid){
+    //this.signUpFormGroup.get('cedulaFormControl')?.errors?.['required']
     if(this.cedulaFormControl.errors?.['required']){
       this.errorCedula = ConfigConst.REQUIREDFIELD;
     }

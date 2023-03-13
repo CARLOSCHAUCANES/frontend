@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormBuilder,FormGroup,Validators,AbstractControl,FormControl,AsyncValidatorFn, ValidationErrors} from '@angular/forms';
 import { Observable, of } from 'rxjs'; 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,11 @@ export class ValidationsService {
     }
     return false;
   }
+
+  validateForm(form:FormGroup){
+
+  }
+  
 
 
 }

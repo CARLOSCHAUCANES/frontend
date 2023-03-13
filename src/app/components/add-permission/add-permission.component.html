@@ -34,16 +34,16 @@
     >
       <div *nzModalContent>
         <!--begin content--------->
-        <form [formGroup]="permissionformGroup" class="container-form">
-          <div class="container-control" #route>
+        <form [formGroup]="permissionformGroup"  class="container-form">
+          <div class="container-control"  name-control="route" type-control="input-text"  #route>
             <label>Nombre Ruta</label>
-            <input type="text" [formControl]="routeFormControl" >
+            <input type="text" minlength="8"   formControlName="route"/>
           </div>
-          <div class="container-control">
+          <div class="container-control" name-control="description" type-control="textarea" #route>
             <label>Descripcion</label>
-            <textarea #elementProfiles [formControl]="descriptionFormControl" rows="5" ></textarea>
+            <textarea #elementProfiles  formControlName="description" rows="5" ></textarea>
           </div>
-          <div class="container-control">
+          <div class="container-control" name-control="profiles" type-control="combobox" #route>
             <label>Selecciona el Tipo de Perfil</label>
             <div  class="container-combobox">
               <div  *ngFor="let profile of profiles; let i=index" > 
@@ -53,6 +53,7 @@
             </div>
           </div>
           <div class="container-control">
+            <button (click)="validateFormPermission()">Guardar</button>
           </div>
       </form>
       </div>

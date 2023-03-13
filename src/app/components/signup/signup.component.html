@@ -3,7 +3,7 @@
         <h3>REGISTRO DE USUARIOS</h3>
         <form [formGroup]="signUpFormGroup">
           <label>
-            <input [formControl]="cedulaFormControl"  minlength="2" maxlength="15" type="text"  placeholder="Ingresa cédula"/>
+            <input [formControl]="cedulaFormControl"   minlength="2" maxlength="15" type="text"  placeholder="Ingresa cédula"/>
             <app-error-control  [errorCedula]="errorCedula"></app-error-control>
           </label>
           <label>

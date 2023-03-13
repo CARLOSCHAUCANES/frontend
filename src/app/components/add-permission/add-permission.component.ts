@@ -1,5 +1,5 @@
-import { Component,ViewChild,Renderer2, ElementRef , OnInit, AfterViewInit, } from '@angular/core';
-import { FormGroup,FormControl,Validators, FormArray,AbstractControl } from '@angular/forms';
+import { Component,ViewChild,Renderer2, ElementRef , OnInit, AfterViewInit, ViewChildren, QueryList, asNativeElements, } from '@angular/core';
+import { FormBuilder,FormGroup,Validators,AbstractControl,FormControl,AsyncValidatorFn, ValidationErrors,FormArray} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
@@ -10,6 +10,7 @@ import { ConfigConst as CC } from 'src/app/config/config.const';
 import { style } from '@angular/animations';
 import { Profile } from 'src/app/interfaces/Profile';
 import { Permission } from 'src/app/interfaces/Permission';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-add-permission',
@@ -19,6 +20,7 @@ import { Permission } from 'src/app/interfaces/Permission';
 
 export  class AddPermissionComponent implements OnInit{
   @ViewChild('route') vRoute?: ElementRef;
+  @ViewChildren('route') vRoutes?: QueryList<ElementRef<HTMLDivElement>>;
   //to define variables modal
   isVisible = false;
   isOkLoading = false;
@@ -32,22 +34,25 @@ export  class AddPermissionComponent implements OnInit{
   public listProfiles?:any[];
   public listOfData: Permission[]=[];
   //forms controls by every field
+  public idFormControl = new FormControl('');
+
   public routeFormControl = new FormControl('',{
     validators:[Validators.required]
   });
   public descriptionFormControl = new FormControl('',{
     validators:[Validators.required]
   });
+   profilesFormArray = new FormArray<any>([],[Validators.required]);
   //define forms
-  public permissionformGroup = new FormGroup({
-    _id:new FormControl(''),
+   permissionformGroup = new FormGroup({
+    _id:this.idFormControl,
     route:this.routeFormControl,
     description:this.descriptionFormControl,
-    profiles:new FormArray<any>([])  
+    profiles: this.profilesFormArray
   });
   //to call variables type @ViewChild
   
-  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2) {
+  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,) {
   }
   ngOnInit(): void {
     this.authService.getProfiles().subscribe(res=>{
@@ -88,6 +93,7 @@ getListPermissions(){
   }
   savePermission(){
     if(!this.permissionformGroup.valid){
+      //this.validateFormPermission();
       this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.REGISTER,CO.DATAINCORRECT);
       this.isOkLoading = false;
       return;
@@ -144,28 +150,37 @@ getListPermissions(){
   }
 
   handleOk(): void {
+    this.validateFormPermission();
+    /*
     this.isOkLoading = true;
-    if(this.isModalRegister){
+    if(this.isModalRegister)
+    {
       this.savePermission();
     }
-    else{
+    else
+    {
       const ele = this.vRoute?.nativeElement;
-      console.log(ele);
       const p = this.render2.createElement('p');
-      p.innerHTML = "hello dear world";
-      this.render2.setStyle(ele,"background-color","red");
-      this.render2.appendChild(ele,p);
- 
-      setTimeout(() => {
+      for ( const ele  of this.vRoutes?.toArray()!) {
+        const a = ele.nativeElement;
+        console.log(a.getAttribute("name-control")?.valueOf(),a.getAttribute("type-control")?.valueOf());
+        const p = this.render2.createElement('p');
+        p.innerHTML = "hello world, i feel very happy";
+        this.render2.appendChild(a,p);
+        
+      } */
+      /*this.vRoutes?.forEach(ele=>{
+        this.render2.appendChild(ele.nativeElement,p);
+      })*/
+      /*setTimeout(() => {
         this.updatePermission();
-      }, 20000);
+      }, 20000);*/
     //-------------------------------------------
     /*const p: HTMLParagraphElement = this.render2.createElement('p');
     p.innerHTML = "add new"
-    this.render2.insertBefore(this.vRoute, p,true);*/
-    //--------------------------------------------
-      
-    }
+    this.render2.insertBefore(this.vRoute, p,true);
+    //--------------------------------------------  
+    }*/
     
   }
 
@@ -184,13 +199,65 @@ getListPermissions(){
     this.isVisible = true;
  }
 
- ngAfterViewInit(){
-  
- }
+
 
 
 verifyChecked(profileId:any){
   return this.listProfiles?.includes(profileId);
 }
 
+
+deleteMessages(){
+  const listNodes = document.querySelectorAll(".men");
+  listNodes.forEach(n=>{
+    n.remove();
+  })
+}
+
+validateFormPermission(){
+  this.deleteMessages();
+  
+const cforms = PC.FORMS;
+cforms.forEach(form =>{
+  if(form.name == "permissionformGroup"){
+    const controls = form.controls;
+    controls.forEach(control =>{
+      const validators = control.validators;
+      validators.forEach(validat=>{
+        if(validat == 'required'){ 
+           const mRequired = this.campoRequired(this.permissionformGroup.get(control.control));
+           //--------------------------------------------------
+            for ( const ele  of this.vRoutes?.toArray()!) {
+              const a = ele.nativeElement;
+              if(a.getAttribute("name-control")?.valueOf()==control.control){
+                const p = this.render2.createElement('p');
+                this.render2.setAttribute(p,"class","men");
+                this.render2.setStyle(p,"color","red");
+                this.render2.setStyle(p,"font-size",".7rem");
+                this.render2.setStyle(p,"font-style","italic");
+                p.innerHTML = mRequired;
+                this.render2.appendChild(a,p);
+
+              }
+
+            }
+           //--------------------------------------------------
+        }
+      })
+    }) 
+  }
+
+
+});
+
+}
+
+ campoRequired(control:any):String{
+  if(control.status as String === "INVALID"){
+    if(control.errors.required){
+      return "El campo es requerido";
+    }
+  }
+   return "";
+  }
 }

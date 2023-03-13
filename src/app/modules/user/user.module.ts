@@ -24,7 +24,8 @@ import { AddPermissionComponent } from 'src/app/components/add-permission/add-pe
   exports:[
     SignupComponent,
     SigninComponent,
-    ErrorControlComponent
+    ErrorControlComponent,
+    AddPermissionComponent
   ]
 })
 export class UserModule { }

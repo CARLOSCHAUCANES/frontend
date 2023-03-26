@@ -8,9 +8,9 @@ export class PermissionConst{
         {
             name:"permissionformGroup",
             controls:[
-                {control:"route",type:"input-text",validators:['required']},
-                {control:"description",type:"textarea",validators:['required']},
-                {control:"profiles",type:"combobox",validators:['required']}
+                {control:"route",validators:['minlength','charactersNumbersLine','routeExists']},
+                {control:"description",validators:['required']},
+                {control:"profiles",validators:['required']}
             ]
        }
     ]

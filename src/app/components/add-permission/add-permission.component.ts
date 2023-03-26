@@ -1,5 +1,5 @@
 import { Component,ViewChild,Renderer2, ElementRef , OnInit, AfterViewInit, ViewChildren, QueryList, asNativeElements, } from '@angular/core';
-import { FormBuilder,FormGroup,Validators,AbstractControl,FormControl,AsyncValidatorFn, ValidationErrors,FormArray} from '@angular/forms';
+import { FormBuilder,FormGroup,Validators,AbstractControl,FormControl,AsyncValidatorFn,ValidatorFn ,ValidationErrors,FormArray} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
@@ -10,7 +10,9 @@ import { ConfigConst as CC } from 'src/app/config/config.const';
 import { style } from '@angular/animations';
 import { Profile } from 'src/app/interfaces/Profile';
 import { Permission } from 'src/app/interfaces/Permission';
-import { empty } from 'rxjs';
+import { Observable,map, observable} from 'rxjs';
+import { ValidationsService } from 'src/app/services/validations.service';
+import { switchMap,mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-add-permission',
@@ -20,6 +22,7 @@ import { empty } from 'rxjs';
 
 export  class AddPermissionComponent implements OnInit{
   @ViewChild('route') vRoute?: ElementRef;
+  @ViewChildren('profilesChecked') vProfilesChecked?:ElementRef;
   @ViewChildren('route') vRoutes?: QueryList<ElementRef<HTMLDivElement>>;
   //to define variables modal
   isVisible = false;
@@ -28,6 +31,7 @@ export  class AddPermissionComponent implements OnInit{
   activeCharging = true;
   isModalRegister:boolean =  false;;
   isModalUpdate:boolean = false;
+  permissionSelected1?:Permission;
   //lists
   public profiles?:Profile[];
   public profilesSelected?:string[];
@@ -37,7 +41,9 @@ export  class AddPermissionComponent implements OnInit{
   public idFormControl = new FormControl('');
 
   public routeFormControl = new FormControl('',{
-    validators:[Validators.required]
+    validators:[this.validate.validateCharacterNumberLine()],
+    asyncValidators:[this.uniqueNameRoute()],
+    updateOn: 'blur'
   });
   public descriptionFormControl = new FormControl('',{
     validators:[Validators.required]
@@ -52,7 +58,7 @@ export  class AddPermissionComponent implements OnInit{
   });
   //to call variables type @ViewChild
   
-  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,) {
+  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,private validate:ValidationsService) {
   }
   ngOnInit(): void {
     this.authService.getProfiles().subscribe(res=>{
@@ -68,15 +74,12 @@ getListPermissions(){
   })
 }
 
-  onCheckChange(event:any) {
+  onCheckChange(event:any){
     const formArray: FormArray = this.permissionformGroup.get('profiles') as FormArray;
-    /* Selected */
-    if(event.target.checked){
-      // Add a new control in the arrayForm
-      formArray.push(new FormControl(event.target.value));
+    if(event.target.checked){/* Selected */
+      formArray.push(new FormControl(event.target.value));// Add a new control in the arrayForm
     }
-    /* unselected */
-    else
+    else/* unselected */
     {
       // find the unselected element
       let i: number = 0;
@@ -89,8 +92,10 @@ getListPermissions(){
         i++;
       });
     }
-
   }
+
+
+
   savePermission(){
     if(!this.permissionformGroup.valid){
       //this.validateFormPermission();
@@ -151,37 +156,13 @@ getListPermissions(){
 
   handleOk(): void {
     this.validateFormPermission();
-    /*
-    this.isOkLoading = true;
-    if(this.isModalRegister)
-    {
+    console.log(this.permissionformGroup);
+    if(this.isModalRegister){
       this.savePermission();
     }
-    else
-    {
-      const ele = this.vRoute?.nativeElement;
-      const p = this.render2.createElement('p');
-      for ( const ele  of this.vRoutes?.toArray()!) {
-        const a = ele.nativeElement;
-        console.log(a.getAttribute("name-control")?.valueOf(),a.getAttribute("type-control")?.valueOf());
-        const p = this.render2.createElement('p');
-        p.innerHTML = "hello world, i feel very happy";
-        this.render2.appendChild(a,p);
-        
-      } */
-      /*this.vRoutes?.forEach(ele=>{
-        this.render2.appendChild(ele.nativeElement,p);
-      })*/
-      /*setTimeout(() => {
-        this.updatePermission();
-      }, 20000);*/
-    //-------------------------------------------
-    /*const p: HTMLParagraphElement = this.render2.createElement('p');
-    p.innerHTML = "add new"
-    this.render2.insertBefore(this.vRoute, p,true);
-    //--------------------------------------------  
-    }*/
-    
+    else{
+      this.updatePermission();
+    }
   }
 
   handleCancel(): void {
@@ -189,6 +170,7 @@ getListPermissions(){
   }
  //methods to edit a permission
  permissionSelected(permission:Permission){
+    this.permissionSelected1 = permission;
     this.isModalRegister = false;
     this.isModalUpdate = true;
     this.titleModal = PC.MODAL.TITLEMODALUPDATE;
@@ -197,67 +179,66 @@ getListPermissions(){
     this.permissionformGroup.get("description")?.setValue(""+permission.description);
     this.listProfiles = permission.profiles?.map(item=>item._id);
     this.isVisible = true;
+    
+    
  }
 
-
-
-
 verifyChecked(profileId:any){
-  return this.listProfiles?.includes(profileId);
+
+  if(this.listProfiles?.includes(profileId))
+  {
+     return true;
+  }
+  else
+  {
+    return false;
+  }
 }
 
-
-deleteMessages(){
-  const listNodes = document.querySelectorAll(".men");
-  listNodes.forEach(n=>{
-    n.remove();
+loadProfilesSelected(){
+  const formArray: FormArray = this.permissionformGroup.get("profiles") as FormArray;
+  formArray.clear();
+  this.listProfiles?.forEach(item=>{
+    formArray.push(new FormControl(item));
   })
+  console.log(this.permissionformGroup.get("profiles"));
 }
 
 validateFormPermission(){
-  this.deleteMessages();
-  
-const cforms = PC.FORMS;
-cforms.forEach(form =>{
-  if(form.name == "permissionformGroup"){
-    const controls = form.controls;
-    controls.forEach(control =>{
-      const validators = control.validators;
-      validators.forEach(validat=>{
-        if(validat == 'required'){ 
-           const mRequired = this.campoRequired(this.permissionformGroup.get(control.control));
-           //--------------------------------------------------
-            for ( const ele  of this.vRoutes?.toArray()!) {
-              const a = ele.nativeElement;
-              if(a.getAttribute("name-control")?.valueOf()==control.control){
-                const p = this.render2.createElement('p');
-                this.render2.setAttribute(p,"class","men");
-                this.render2.setStyle(p,"color","red");
-                this.render2.setStyle(p,"font-size",".7rem");
-                this.render2.setStyle(p,"font-style","italic");
-                p.innerHTML = mRequired;
-                this.render2.appendChild(a,p);
-
-              }
-
-            }
-           //--------------------------------------------------
-        }
-      })
-    }) 
-  }
-
-
-});
-
+  this.validate.validateForm(this.permissionformGroup,this.vRoutes!,"permissionformGroup",this.render2);
 }
 
- campoRequired(control:any):String{
-  if(control.status as String === "INVALID"){
-    if(control.errors.required){
-      return "El campo es requerido";
+uniqueNameRoute():AsyncValidatorFn{
+  return (control:AbstractControl):Observable<ValidationErrors | null> =>{
+    return this.authService.getPermissionByNameRoute(control.value).pipe(
+      map((exist:any)=>(
+        this.validateNameRoute(exist.response)?{routeExists:true}:null
+        ))
+    )
+  }
+}
+
+validateNameRoute(objeRoute:any):boolean{
+  if(objeRoute)
+  {
+    if(this.isModalUpdate){
+      if(this.permissionSelected1?.route == objeRoute.route){
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else{
+      return true;
     }
   }
-   return "";
+  else{
+    return false;
   }
+  
+}
+
+
 }

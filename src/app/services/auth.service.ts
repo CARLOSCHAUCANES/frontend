@@ -79,7 +79,7 @@ export class AuthService {
    getPermission(url:string):Observable<boolean>{
     let sProfile = JSON.parse(JSON.stringify(localStorage.getItem("user")));
     let oProfile = JSON.parse(sProfile).profile;
-    return this.http.post<any>(this.URL+'/getPermissionByNameRoute',{route:url,profile:oProfile}).pipe(
+    return this.http.post<any>(this.URL+'/getPermissionByNameRouteProfile',{route:url,profile:oProfile}).pipe(
       map(res =>res.response?true:false)
     );
    }
@@ -98,6 +98,10 @@ export class AuthService {
    
    getListPermissions(){
     return this.http.get<any>(this.URL+'/getListPermissions');
+   }
+
+   getPermissionByNameRoute(route:any){
+    return this.http.post<any>(this.URL+'/getPermissionByNameRoute',{route});
    }
 
 }

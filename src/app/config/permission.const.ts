@@ -8,7 +8,7 @@ export class PermissionConst{
         {
             name:"permissionformGroup",
             controls:[
-                {control:"route",validators:['minlength','charactersNumbersLine','routeExists']},
+                {control:"route",validators:['required','charactersNumbersLine','routeExists']},
                 {control:"description",validators:['required']},
                 {control:"profiles",validators:['required']}
             ]

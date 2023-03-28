@@ -36,7 +36,7 @@ registerLocaleData(es);
     TopMenuComponent,
     LeftMenuComponent,
     MainComponent,
-    AccountComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

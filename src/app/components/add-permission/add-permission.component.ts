@@ -22,9 +22,8 @@ import { switchMap,mergeMap } from 'rxjs';
 
 export  class AddPermissionComponent implements OnInit{
   @ViewChild('route') vRoute?: ElementRef;
-  @ViewChildren('profilesChecked') vProfilesChecked?:ElementRef;
   @ViewChildren('route') vRoutes?: QueryList<ElementRef<HTMLDivElement>>;
-  //to define variables modal
+  //to define variables modalw
   isVisible = false;
   isOkLoading = false;
   titleModal = "";
@@ -41,9 +40,9 @@ export  class AddPermissionComponent implements OnInit{
   public idFormControl = new FormControl('');
 
   public routeFormControl = new FormControl('',{
-    validators:[this.validate.validateCharacterNumberLine()],
-    asyncValidators:[this.uniqueNameRoute()],
-    updateOn: 'blur'
+    validators:[Validators.required,this.validate.VALIDATORcharactersNumbersLine()],
+    asyncValidators:[this.VALIDATORrouteExists()],
+    updateOn:'change'
   });
   public descriptionFormControl = new FormControl('',{
     validators:[Validators.required]
@@ -63,8 +62,7 @@ export  class AddPermissionComponent implements OnInit{
   ngOnInit(): void {
     this.authService.getProfiles().subscribe(res=>{
       this.profiles = res.response;
-    })
-    
+    })  
     this.getListPermissions();
   }
 
@@ -76,16 +74,14 @@ getListPermissions(){
 
   onCheckChange(event:any){
     const formArray: FormArray = this.permissionformGroup.get('profiles') as FormArray;
-    if(event.target.checked){/* Selected */
-      formArray.push(new FormControl(event.target.value));// Add a new control in the arrayForm
+    if(event.target.checked){
+      formArray.push(new FormControl(event.target.value));
     }
-    else/* unselected */
+    else
     {
-      // find the unselected element
       let i: number = 0;
       formArray.controls.forEach((ctrl: AbstractControl) => {
         if(ctrl.value == event.target.value) {
-          // Remove the unselected element from the arrayForm
           formArray.removeAt(i);
           return;
         }
@@ -95,10 +91,9 @@ getListPermissions(){
   }
 
 
-
   savePermission(){
     if(!this.permissionformGroup.valid){
-      //this.validateFormPermission();
+      this.validateFormPermission();
       this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.REGISTER,CO.DATAINCORRECT);
       this.isOkLoading = false;
       return;
@@ -126,6 +121,8 @@ getListPermissions(){
   //update a permission
   updatePermission(){
     if(!this.permissionformGroup.valid){
+      this.permissionformGroup.untouched;
+      this.validateFormPermission();
       this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.UPDATE,CO.DATAINCORRECT);
       this.isOkLoading = false;
       return;
@@ -155,12 +152,11 @@ getListPermissions(){
   }
 
   handleOk(): void {
-    this.validateFormPermission();
-    console.log(this.permissionformGroup);
     if(this.isModalRegister){
       this.savePermission();
     }
-    else{
+    else
+    {
       this.updatePermission();
     }
   }
@@ -207,8 +203,7 @@ loadProfilesSelected(){
 validateFormPermission(){
   this.validate.validateForm(this.permissionformGroup,this.vRoutes!,"permissionformGroup",this.render2);
 }
-
-uniqueNameRoute():AsyncValidatorFn{
+VALIDATORrouteExists():AsyncValidatorFn{
   return (control:AbstractControl):Observable<ValidationErrors | null> =>{
     return this.authService.getPermissionByNameRoute(control.value).pipe(
       map((exist:any)=>(

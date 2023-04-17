@@ -45,4 +45,11 @@ export class ConfigConst{
         REGISTER:"Registro",
         UPDATE:"Actualización"
     }
+    static VALIDATORS={
+        CHARACTERSNUMBERSLINE:{name:"charactersNumbersLine",message:"Minimmo 2 caracteres, El campo solo permite letras al inicio, conbinaciones alfanuméricas y el simbolo (-)"},
+        REQUIRED:{name:"required",message:"El campo es requerido"},
+        MINLENGTH:{name:"minlength",message:"No cumple la longitud de",other:'caracteres'},
+        MAXLENGTH:{name:"maxlength",message:"Solo es permitodo máximo",other:'caracteres'},
+        ROUTEEXISTS:{name:"routeExists",message:"El nombre de la ruta ya existe"}
+    }
 }

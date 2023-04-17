@@ -1,7 +1,8 @@
 import { Injectable,  } from '@angular/core';
-import {  CanActivate, Resolve, Router} from '@angular/router';
-import { map, Observable, Subscriber,of } from 'rxjs';
+import {  CanActivate, Resolve,Route, Router} from '@angular/router';
+import { map, Observable, Subscriber,of,delay ,from} from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { ActivatedRouteSnapshot,RouterStateSnapshot } from '@angular/router';
 
 interface Permission {
   url:string,
@@ -11,54 +12,46 @@ interface Permission {
 @Injectable({
   providedIn: 'root'
 })
-  //let sProfile = JSON.parse(JSON.stringify(localStorage.getItem("user")));
-  //let oProfile = JSON.parse(sProfile).profile;
-  //this.router.navigate(['/signin']);
 export class AuthGuard implements CanActivate {
-    url:any; 
-  constructor(private authService:AuthService,private router:Router){
-    this.url = "";
-  }
-  canActivate():boolean {
-    if(this.authService.loggedIn())
+    url:any;
+    permission:any; 
+   constructor(private authService:AuthService,private router:Router){}
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):Observable<boolean>{
+    //console.log(route.url[0].path);
+   if(this.authService.loggedIn())
     {
-      return true;
+       return this.authService.getPermission(route.url[0].path);       
     }
     else
     {
       this.router.navigate(['/signin']);
     }
-    return false;
+    return of(false);
  }
 
- /*
- async verify(){
-    let url = await this.verifyUrl();
-    let permission = await this.verifyPermission(""+url);
-    if(permission){
-      return true;
-    }
-    else{
-      return false;
-    }
- }
- verifyUrl():Promise<string>{
-  return new Promise((resolve,reject)=>{
-    this.authService.getUrl().subscribe((event:any)=>{
-      const rout = event['url']
-      resolve(rout)
-    })     
-  })
- }
 
- verifyPermission(url:string):Promise<boolean>{
+ 
+ 
+
+ 
+
+
+ verifyPermission(route:string):Promise<boolean>{
   return new Promise((resolve,reject)=>{
-    this.authService.getPermission(url).subscribe(res=>{
-      resolve(res);
+    this.authService.getPermission(route).subscribe(permission=>{
+      if(permission){
+        resolve(true);
+      }
+      else{
+        resolve(false);
+      }
     })
-  })
- }
-*/
+  });
+}
+
 
 }
 

@@ -23,7 +23,7 @@
       <nz-dropdown-menu #menu2="nzDropdownMenu">
         <ul nz-menu>
           <ng-container *ngIf="!authService.loggedIn(); else logged ">
-            <li nz-menu-item ><a routerLink="/signin"><span nz-icon nzType="login" nzTheme="outline"></span>&nbsp;Login</a></li>
+            <li nz-menu-item  ><a routerLink="/signin" ><span nz-icon nzType="login" nzTheme="outline"></span>&nbsp;Login</a></li>
             <li nz-menu-item><a routerLink="/signup"><span nz-icon nzType="usergroup-add" nzTheme="outline"></span>&nbsp;Registrar</a></li>
           </ng-container>
           <ng-template #logged>
@@ -39,12 +39,8 @@
       <app-left-menu></app-left-menu>
     </nz-sider>
     <nz-layout class="inner-layout">
-      <!--nz-breadcrumb>
-        <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-        <nz-breadcrumb-item>List</nz-breadcrumb-item>
-        <nz-breadcrumb-item>App</nz-breadcrumb-item>
-      </nz-breadcrumb-->
       <nz-content>
+        <ng-template></ng-template>
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>

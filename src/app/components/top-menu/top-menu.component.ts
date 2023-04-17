@@ -21,17 +21,15 @@ export class TopMenuComponent implements OnInit {
   }
   verifyPermission(route:string):Promise<boolean>{
     return new Promise((resolve,reject)=>{
-       this.service.getPermission(route).subscribe(permission=>{
-        console.log("Permiso=>",permission);
-        if(permission){
+      this.service.getPermission(route).subscribe(permission=>{
+      if(permission){
           resolve(true);
         }
-        else{
+        else
+        {
           resolve(false);
         }
-        
-        
-      })
+     })
     });
   }
 

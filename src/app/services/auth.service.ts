@@ -16,11 +16,10 @@ interface Permission {
   providedIn: 'root'
 })
 
-
-
 export class AuthService {
   private URL = "http://localhost:3000/api";
-  private url:string;
+  private url?:string;
+  private per?:boolean;
   public observePermission:Observable<Permission> = of({});
   constructor(
     private http:HttpClient,
@@ -28,6 +27,7 @@ export class AuthService {
     private validations:ValidationsService
              ) { 
               this.url = "";
+              this.per = false;
              }
   signUp(user:any){
     return this.http.post<any>(this.URL+'/signup',user);
@@ -67,14 +67,15 @@ export class AuthService {
   getListUser(){
     return this.http.get<any>(this.URL+'/list-users');
   }
-   getUrl():Observable<any>{
-    return this.router.events.
-        pipe(filter(event=>event instanceof NavigationEnd));/*.subscribe((event:any)=>{
-          this.url = event['url'];
-          return this.url;
-        });*/
+   getUrl():Promise<string>{
+    return new Promise(resolve=>{
+        this.router.events.
+        pipe(filter(event=>event instanceof NavigationEnd)).subscribe((event:any)=>{
+          resolve(event['url']);
+        });
+    }) 
+  
    }
-
 
    getPermission(url:string):Observable<boolean>{
     let sProfile = JSON.parse(JSON.stringify(localStorage.getItem("user")));
@@ -83,6 +84,10 @@ export class AuthService {
       map(res =>res.response?true:false)
     );
    }
+
+ getPerm():boolean{
+  return this.per?true:false;
+ }
 
    getProfiles():Observable<any>{
       return this.http.get<any>(this.URL+'/listActiveprofiles');

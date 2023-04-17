@@ -7,6 +7,7 @@ import { ErrorControlComponent } from 'src/app/components/error-control/error-co
 import { NgzorroModule } from '../ngzorro/ngzorro.module';
 import { MaterialModule } from '../material/material.module';
 import { AddPermissionComponent } from 'src/app/components/add-permission/add-permission.component';
+import { AppComponent } from 'src/app/app.component';
 @NgModule({
   declarations: [
     SignupComponent,

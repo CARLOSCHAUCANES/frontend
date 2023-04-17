@@ -1,27 +1,23 @@
 import { Component,ViewChild,Renderer2, ElementRef , OnInit, AfterViewInit, ViewChildren, QueryList, asNativeElements, } from '@angular/core';
 import { FormBuilder,FormGroup,Validators,AbstractControl,FormControl,AsyncValidatorFn,ValidatorFn ,ValidationErrors,FormArray} from '@angular/forms';
-import {ThemePalette} from '@angular/material/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { ConfigConst as CO} from 'src/app/config/config.const';
-import { NgzorroModule } from 'src/app/modules/ngzorro/ngzorro.module';
 import { PermissionConst as PC } from 'src/app/config/permission.const';
-import { ConfigConst as CC } from 'src/app/config/config.const';
-import { style } from '@angular/animations';
 import { Profile } from 'src/app/interfaces/Profile';
 import { Permission } from 'src/app/interfaces/Permission';
 import { Observable,map, observable} from 'rxjs';
 import { ValidationsService } from 'src/app/services/validations.service';
-import { switchMap,mergeMap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-permission',
-  templateUrl: './add-permission.component.html',
+  templateUrl: './add-permission.component.html', 
   styleUrls: ['./add-permission.component.scss']
 })
 
 export  class AddPermissionComponent implements OnInit{
-  @ViewChild('route') vRoute?: ElementRef;
+  public departaments:string[] = [];
   @ViewChildren('route') vRoutes?: QueryList<ElementRef<HTMLDivElement>>;
   //to define variables modalw
   isVisible = false;
@@ -38,7 +34,6 @@ export  class AddPermissionComponent implements OnInit{
   public listOfData: Permission[]=[];
   //forms controls by every field
   public idFormControl = new FormControl('');
-
   public routeFormControl = new FormControl('',{
     validators:[Validators.required,this.validate.VALIDATORcharactersNumbersLine()],
     asyncValidators:[this.VALIDATORrouteExists()],
@@ -57,13 +52,17 @@ export  class AddPermissionComponent implements OnInit{
   });
   //to call variables type @ViewChild
   
-  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,private validate:ValidationsService) {
+  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,private validate:ValidationsService,private route:ActivatedRoute) {
   }
-  ngOnInit(): void {
+  ngOnInit(): void {  
     this.authService.getProfiles().subscribe(res=>{
       this.profiles = res.response;
     })  
     this.getListPermissions();
+    /*
+    let urlActive = localStorage.getItem("urlActive");
+    console.log(urlActive);
+    this.authService.getPermission(urlActive+"").subscribe(p=>{console.log(p)});*/
   }
 
 getListPermissions(){
@@ -89,12 +88,10 @@ getListPermissions(){
       });
     }
   }
-
-
+  //save permission
   savePermission(){
     if(!this.permissionformGroup.valid){
       this.validateFormPermission();
-      this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.REGISTER,CO.DATAINCORRECT);
       this.isOkLoading = false;
       return;
     }
@@ -121,9 +118,7 @@ getListPermissions(){
   //update a permission
   updatePermission(){
     if(!this.permissionformGroup.valid){
-      this.permissionformGroup.untouched;
       this.validateFormPermission();
-      this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.UPDATE,CO.DATAINCORRECT);
       this.isOkLoading = false;
       return;
     }
@@ -141,7 +136,6 @@ getListPermissions(){
     })
   }
   //methods to handle a modal
-
   showModalSavePermission(){
     this.isModalRegister = true;
     this.isModalUpdate = false;
@@ -150,7 +144,7 @@ getListPermissions(){
     this.permissionformGroup.reset();
     this.listProfiles = [];
   }
-
+ 
   handleOk(): void {
     if(this.isModalRegister){
       this.savePermission();
@@ -174,13 +168,10 @@ getListPermissions(){
     this.permissionformGroup.get("route")?.setValue(""+permission.route);
     this.permissionformGroup.get("description")?.setValue(""+permission.description);
     this.listProfiles = permission.profiles?.map(item=>item._id);
-    this.isVisible = true;
-    
-    
+    this.isVisible = true;   
  }
 
 verifyChecked(profileId:any){
-
   if(this.listProfiles?.includes(profileId))
   {
      return true;
@@ -229,11 +220,10 @@ validateNameRoute(objeRoute:any):boolean{
       return true;
     }
   }
-  else{
+  else
+  {
     return false;
   }
   
 }
-
-
 }

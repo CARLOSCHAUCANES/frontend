@@ -1,8 +1,9 @@
 <ul nz-menu nzMode="inline" class="sider-menu">
     <li nz-submenu nzOpen nzIcon="user" nzTitle="Users">
       <ul>
-        <li nz-menu-item nzSelected *ngIf="LISTUSERS.permission" routerLink="/{{LISTUSERS.route}}">{{LISTUSERS.name}}</li>
-        <li nz-menu-item  *ngIf="ADDPERMISSION.permission" routerLink="/{{ADDPERMISSION.route}}">{{ADDPERMISSION.name}}</li>
+        <!--li nz-menu-item nzSelected *ngIf="LISTUSERS.permission" routerLink="/{{LISTUSERS.route}}">{{LISTUSERS.name}}</li-->
+        <li nz-menu-item nzSelected *ngIf="LISTUSERS.permission"  routerLink="/{{LISTUSERS.route}}">{{LISTUSERS.name}}</li>
+        <li nz-menu-item  *ngIf="ADDPERMISSION.permission"  routerLink="/{{ADDPERMISSION.route}}">{{ADDPERMISSION.name}}</li>
         <li nz-menu-item>option3</li>
         <li nz-menu-item>option4</li>
       </ul>

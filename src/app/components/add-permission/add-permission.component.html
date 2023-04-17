@@ -1,57 +1,58 @@
-<div class="container-top">
-  <h3>Registro de Rutas</h3>
-  <button (click)="showModalSavePermission()" title="Adicionar un nuevo Permiso" nz-button nzType="primary" nzShape="circle"><span nz-icon nzType="plus-circle" ></span></button>
-  </div>
-<nz-table #basicTable [nzData]="listOfData" [nzPageSize] = "5">
-  <thead>
-    <tr>
-      <th>Ruta</th>
-      <th>Descripcion</th>
-      <th>Perfiles</th>
-      <th>Acción</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{ data.route }}</td>
-      <td>{{ data.description }}</td>
-      <td>
-          <label *ngFor="let pro of data.profiles;">
-            <span>{{ pro.name + " "}}</span>
-          </label>
-      </td>
-      <td><button nz-button nzType="primary" (click)="permissionSelected(data)" nzShape="circle"><span nz-icon nzType="edit"></span></button></td>
-    </tr>
-  </tbody>
-</nz-table>
-<nz-modal
-      [(nzVisible)]="isVisible"
-      [nzTitle]="titleModal"
-      (nzOnCancel)="handleCancel()"
-      (nzOnOk)="handleOk()"
-      [nzOkLoading]="isOkLoading"
-      (nzAfterOpen)="loadProfilesSelected()"   
-    >
-      <div *nzModalContent>
-        <!--begin content--------->
-        <form [formGroup]="permissionformGroup"  class="container-form">
-          <div class="container-control"  name-control="route"   #route>
-            <label>Nombre Ruta</label>
-            <input type="text"  maxlength="60"  formControlName="route"/>
-          </div>
-          <div class="container-control" name-control="description"  #route>
-            <label>Descripcion</label>
-            <textarea  formControlName="description" rows="5" ></textarea>
-          </div>
-          <div class="container-control" name-control="profiles"  #route>
-            <label>Selecciona el Tipo de Perfil</label>
-            <div  class="container-combobox">
-              <div  *ngFor="let profile of profiles; let i=index"> 
-                <input type="checkbox" [checked]="verifyChecked(profile._id)" [value]="profile._id"   (change)="onCheckChange($event)">
-                {{profile.name}}
+
+  <div class="container-top">
+    <h3>Registro de Rutas</h3>
+    <button (click)="showModalSavePermission()" title="Adicionar un nuevo Permiso" nz-button nzType="primary" nzShape="circle"><span nz-icon nzType="plus-circle" ></span></button>
+    </div>
+  <nz-table #basicTable [nzData]="listOfData" [nzPageSize] = "5">
+    <thead>
+      <tr>
+        <th>Ruta</th>
+        <th>Descripcion</th>
+        <th>Perfiles</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.route }}</td>
+        <td>{{ data.description }}</td>
+        <td>
+            <label *ngFor="let pro of data.profiles;">
+              <span>{{ pro.name + " "}}</span>
+            </label>
+        </td>
+        <td><button nz-button nzType="primary" (click)="permissionSelected(data)" nzShape="circle"><span nz-icon nzType="edit"></span></button></td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-modal
+        [(nzVisible)]="isVisible"
+        [nzTitle]="titleModal"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        [nzOkLoading]="isOkLoading"
+        (nzAfterOpen)="loadProfilesSelected()"   
+      >
+        <div *nzModalContent>
+          <!--begin content--------->
+          <form [formGroup]="permissionformGroup"  class="container-form">
+            <div class="container-control"  name-control="route"   #route>
+              <label>Nombre Ruta</label>
+              <input type="text"  maxlength="60"  formControlName="route"/>
+            </div>
+            <div class="container-control" name-control="description"  #route>
+              <label>Descripcion</label>
+              <textarea  formControlName="description" rows="5" ></textarea>
+            </div>
+            <div class="container-control" name-control="profiles"  #route>
+              <label>Selecciona el Tipo de Perfil</label>
+              <div  class="container-combobox">
+                <div  *ngFor="let profile of profiles; let i=index"> 
+                  <input type="checkbox" [checked]="verifyChecked(profile._id)" [value]="profile._id"   (change)="onCheckChange($event)">
+                  {{profile.name}}
+                </div>
               </div>
             </div>
-          </div>
-      </form>
-      </div>
-    </nz-modal>
+        </form>
+        </div>
+      </nz-modal>

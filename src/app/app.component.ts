@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import {AuthService} from './services/auth.service';
 import { ConfigConst as CONFIG } from './config/config.const';
 import {Subscription} from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,16 @@ import {Subscription} from 'rxjs';
 export class AppComponent implements OnInit{
  public showUpdateUser:boolean=false;
  public dataUser:any;
+ public permission:boolean = false;
+
+ constructor(public authService:AuthService,private route:ActivatedRoute){}
+ title = 'frontend';
 
   ngOnInit(): void {
-    //-----------------------------------
-    //-----------------------------------
+
     this.authService.checkAuthorization().subscribe(
       res=>{
         if(res.status == CONFIG.C401){
-          console.log(CONFIG.NOAUTHORIZATION);
         }
       },
       err=>{
@@ -34,18 +37,14 @@ export class AppComponent implements OnInit{
       }
     }
   }
-
-ngOnDestroy(){
-}
-
-  constructor(public authService:AuthService){}
-  title = 'frontend';
+ 
 
   updateSesion($event:any){
-    alert("hola mundo");
     const dataU = ""+$event+"";
     this.dataUser = JSON.parse(dataU);
   }
+
+
 
 
 }

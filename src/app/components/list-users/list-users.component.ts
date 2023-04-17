@@ -24,6 +24,9 @@ export class ListUsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListUsers();
+    /*let urlActive = localStorage.getItem("urlActive");
+    console.log(urlActive);
+    this.authService.getPermission(urlActive+"").subscribe(p=>{console.log(p)});*/
   }
 
      getListUsers(){
@@ -33,7 +36,6 @@ export class ListUsersComponent implements OnInit {
       },
       err=>{
         const res = JSON.parse(JSON.stringify(err));
-        console.log(res);
        // if(res.code == )
       }
     )

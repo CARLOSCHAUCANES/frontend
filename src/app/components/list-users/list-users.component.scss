@@ -1,0 +1,33 @@
+//---------styles for modal--------------
+.container-control{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .container-control input,textarea{
+    border-radius: 0.3em;
+  }
+  
+  .container-control select{
+    height: 25px;
+  }
+  .container-combobox{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .8rem;
+    margin-top: .8rem;
+  }
+  
+  .container-combobox label{
+    margin-right: .5rem;
+  }
+
+  .container-group{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .container-group .container-control{
+    width: 50%;
+  }

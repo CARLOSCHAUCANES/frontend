@@ -21,11 +21,11 @@ export class AppComponent implements OnInit{
 
     this.authService.checkAuthorization().subscribe(
       res=>{
-        if(res.status == CONFIG.C401){
+        if(res.status == CONFIG.CODES.C401){
         }
       },
       err=>{
-        if(err.status == CONFIG.C401){
+        if(err.status == CONFIG.CODES.C401){
           this.authService.logout();
         }
       }

@@ -1,5 +1,5 @@
-
-<nz-table #basicTable [nzData]="listOfData">
+<button (click)="showModalNewUser()" title="Adicionar un nuevo Permiso" nz-button nzType="primary" nzShape="circle"><span nz-icon nzType="plus-circle" ></span></button>
+<nz-table #basicTable [nzData]="listOfData" [nzPageSize] = "5">
     <thead>
       <tr>
         <th>Name</th>
@@ -16,9 +16,71 @@
         <td>{{ data.createdAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
         <td>{{ data.updatedAt | date:'dd/MM/yyyy hh:mm:ss'}}</td>
         <td>
-          <a>Edit</a>
-          <!--nz-divider nzType="vertical"></nz-divider-->
+          <tr>
+            <td><button nz-button nzType="primary"  nzShape="circle" title="Editar un usuario"><span nz-icon nzType="edit" (click)="showModalEditUser(data)"></span></button></td>
+            <td><button nz-button nzType="primary"  nzShape="circle" title="Detalle caracteristicas usuario"><span nz-icon nzType="eye"></span></button></td>
+        </tr>
         </td>
       </tr>
     </tbody>
   </nz-table>
+  <nz-modal
+        [(nzVisible)]="isVisible"
+        [nzTitle]="titleModal"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        [nzOkLoading]="isOkLoading"
+      >
+      <div *nzModalContent>
+        <!--begin content--------->
+        <form [formGroup]="userformGroup"  class="container-form">
+          <div class="container-group">
+            <div class="container-control"  name-control="cedula"   #route>
+              <label>Cédula</label>
+              <input type="text"  maxlength="60"  formControlName="cedula"/>
+            </div>
+            <div class="container-control"  name-control="profile"   #route>
+              <label>Perfil</label>
+              <select  formControlName="profile" >
+                <option>Seleccionar</option>
+                <option   *ngFor="let pro of listProfiles" [value]="pro._id" [selected]="pro.state">{{pro.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="container-group">
+            <div class="container-control"  name-control="name"   #route>
+              <label>Nombre</label>
+              <input type="text"  maxlength="60"  formControlName="name"/>
+            </div>
+            <div class="container-control"  name-control="lastName"   #route>
+              <label>Apellido</label>
+              <input type="text"  maxlength="60"  formControlName="lastName"/>
+            </div>
+          </div>
+          <div class="container-control"  name-control="email"   #route>
+            <label>E-mail</label>
+            <input type="text"    formControlName="email"/>
+          </div>
+          <div class="container-group">
+            <div class="container-control"  name-control="phone"   #route>
+              <label>Teléfono</label>
+              <input type="text"    formControlName="phone"/>
+            </div>
+            <div class="container-control"  name-control="address"   #route>
+              <label>Dirección</label>
+              <input type="text"   formControlName="address"/>
+            </div>
+          </div>
+          <div class="container-group">
+            <div class="container-control"  name-control="password"   #route>
+              <label>Contraseña</label>
+              <input type="text"   formControlName="password"/>
+            </div>
+            <div class="container-control"  name-control="confirm"   #route>
+              <label>Confirmar</label>
+              <input type="text"   formControlName="confirm"/>
+            </div>
+          </div>
+        </form>
+      </div>
+      </nz-modal>

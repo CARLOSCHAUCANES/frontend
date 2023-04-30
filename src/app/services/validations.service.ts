@@ -21,11 +21,11 @@ export class ValidationsService  {
 //assign messahe every control 
 assignMessage(ctrl:any){
     let message:any = "";
-    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.CHARACTERSNUMBERSLINE.name))message = CC.VALIDATORS.CHARACTERSNUMBERSLINE.message;
-    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.REQUIRED.name))message = CC.VALIDATORS.REQUIRED.message; 
-    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.MINLENGTH.name))message =CC.VALIDATORS.MINLENGTH.message+" "+ctrl.errorrs.minlength.requiredLength +" "+CC.VALIDATORS.MINLENGTH.other;
-    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.MAXLENGTH.name))message = CC.VALIDATORS.MAXLENGTH.message+" "+ ctrl.errors.maxlength.quantityMax + " "+CC.VALIDATORS.MAXLENGTH.other; 
-    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.ROUTEEXISTS.name))message = CC.VALIDATORS.ROUTEEXISTS.message;
+    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.characteresNumbersLine.name))message = CC.VALIDATORS.characteresNumbersLine.message;
+    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.required.name))message = CC.VALIDATORS.required.message; 
+    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.minLength.name))message =CC.VALIDATORS.minLength.message+" "+ctrl.errorrs.minlength.requiredLength +" "+CC.VALIDATORS.minLength.other;
+    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.maxLength.name))message = CC.VALIDATORS.maxLength.message+" "+ ctrl.errors.maxlength.quantityMax + " "+CC.VALIDATORS.maxLength.other; 
+    if(ctrl.errors?.hasOwnProperty(CC.VALIDATORS.routExists.name))message = CC.VALIDATORS.routExists.message;
     return message; 
 }
 

@@ -17,8 +17,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
       )
   }
   handleError(error:HttpErrorResponse){
-    if(error.status == conf.CERO){
-      const res = new Response(conf.MESSAGEERRORSERVER,{},conf.C501);
+    if(error.status == conf.CODES.CERO){
+      const res = new Response(conf.SERVER_MESSAGES_ERROR.messageErrorServer,{},conf.CODES.C501);
       return throwError(res.getResponse());
     }
     return throwError(error.error)

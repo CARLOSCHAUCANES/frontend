@@ -1,7 +1,7 @@
 
   <div class="container-top">
     <h3>Registro de Rutas</h3>
-    <button (click)="showModalSavePermission()" title="Adicionar un nuevo Permiso" nz-button nzType="primary" nzShape="circle"><span nz-icon nzType="plus-circle" ></span></button>
+      <button (click)="showModalSavePermission()" title="Adicionar un nuevo Permiso" nz-button nzType="primary" nzShape="circle"><span nz-icon nzType="plus-circle" ></span></button>
     </div>
   <nz-table #basicTable [nzData]="listOfData" [nzPageSize] = "5">
     <thead>
@@ -47,7 +47,7 @@
             <div class="container-control" name-control="profiles"  #route>
               <label>Selecciona el Tipo de Perfil</label>
               <div  class="container-combobox">
-                <div  *ngFor="let profile of profiles; let i=index"> 
+                <div *ngFor="let profile of profiles; let i=index"> 
                   <input type="checkbox" [checked]="verifyChecked(profile._id)" [value]="profile._id"   (change)="onCheckChange($event)">
                   {{profile.name}}
                 </div>

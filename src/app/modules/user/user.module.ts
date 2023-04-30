@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SignupComponent } from '../../components/signup/signup.component'
 import { SigninComponent } from '../../components/signin/signin.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ErrorControlComponent } from 'src/app/components/error-control/error-control.component';
@@ -8,12 +7,13 @@ import { NgzorroModule } from '../ngzorro/ngzorro.module';
 import { MaterialModule } from '../material/material.module';
 import { AddPermissionComponent } from 'src/app/components/add-permission/add-permission.component';
 import { AppComponent } from 'src/app/app.component';
+import { ListUsersComponent } from 'src/app/components/list-users/list-users.component';
 @NgModule({
   declarations: [
-    SignupComponent,
     SigninComponent,
     ErrorControlComponent,
-    AddPermissionComponent
+    AddPermissionComponent,
+    ListUsersComponent
   ],
   imports: [
     CommonModule,
@@ -23,10 +23,10 @@ import { AppComponent } from 'src/app/app.component';
     MaterialModule
   ],
   exports:[
-    SignupComponent,
     SigninComponent,
     ErrorControlComponent,
-    AddPermissionComponent
+    AddPermissionComponent,
+    ListUsersComponent
   ]
 })
 export class UserModule { }

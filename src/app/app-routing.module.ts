@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 //components
 import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
-
 import { AuthGuard } from './auth.guard';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
@@ -28,10 +26,6 @@ const routes: Routes = [
     //canLoad:[LoadGuard]
     //canDeactivate:[WithoutSaveGuard],
 
-  },
-  {
-    path:'signup',
-    component:SignupComponent
   },
   {
     path:'signin',

@@ -1,9 +1,12 @@
 export class PermissionConst{
     static MODAL = {
-        TITLEMODALREGISTER:"REGISTRO PERMISOS",
-        TITLEMODALUPDATE:"ACTUALIZAR PERMISO"
+        titleModalRegister:"REGISTRO PERMISOS",
+        titleModalUpdate:"ACTUALIZAR PERMISO"
     }
-    static NoSELECTEDPROFILES = "No se ha seleccionado ningún perfil";
+    static MESSAGES_ERROR = {
+        NoSelectedProfile:"No se ha seleccionado ningún perfil"
+    }
+    
     static FORMS = [
         {
             name:"permissionformGroup",

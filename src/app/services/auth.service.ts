@@ -6,6 +6,7 @@ import { Observable, of,Subject,Subscription } from 'rxjs';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { ValidationsService } from './validations.service';
 import { filter } from 'rxjs/operators';
+import { EncryptionService } from './encryption.service';
 
 interface Permission {
   url?:string,
@@ -24,6 +25,7 @@ export class AuthService {
   constructor(
     private http:HttpClient,
     private router:Router,
+    private encrypt:EncryptionService,
     private validations:ValidationsService
              ) { 
               this.url = "";
@@ -64,6 +66,11 @@ export class AuthService {
     localStorage.removeItem("user");
     this.router.navigate(['/signin']);
   }
+  
+  saveUser(user:any){
+    return this.http.post<any>(this.URL+"/signup",user);
+  }
+
   getListUser(){
     return this.http.get<any>(this.URL+'/list-users');
   }

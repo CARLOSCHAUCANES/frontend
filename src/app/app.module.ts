@@ -24,7 +24,9 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { AddPermissionComponent } from './components/add-permission/add-permission.component';
 import { MainComponent } from './components/main/main.component';
 import { AccountComponent } from './components/account/account.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
 
 registerLocaleData(es);
 
@@ -32,11 +34,11 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     NameUserComponent,
-    ListUsersComponent,
     TopMenuComponent,
     LeftMenuComponent,
     MainComponent,
-    AccountComponent
+    AccountComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

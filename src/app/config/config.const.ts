@@ -1,55 +1,81 @@
 export class ConfigConst{
-    static readonly TOKEN = 'token';
-    static readonly USER = 'user';
-    static VALIDATIONERROR = 'ValidationError';
-    static DATAINCORRECT = 'Datos Incorrectos';
-    static MESSAGEERRORSERVER = 'Error en el servidor, Intentalo mas tarde';
-    static REQUIREDFIELD = 'Campo requerido';
-    static DATASTRINGINCORRECT = 'Dato Incorrecto';
-    static INVALIDDATA = 'Dato Invalido';
-    static  NOAUTHORIZATION = 'Sesión no autorizada';
-    static REGISTERSUCCESS = 'El registro se realizo  con éxito';
-    static REGISTERUPDATE = 'La actualización se realizo con éxito';
-    static REGISTERERROR='No se pudo realizar el registro, intentalo mas tarde';
-    static C200 = 200;
-    static C400 = 400; 
-    static C499 = 499;
-    static CERO = 0;
-    static C501 = 501;
-    static C401 = 401;
+
+    static AUTHORIZATION = {
+        token:'token',
+        user:'user'
+    }
+   
+   static SERVER_ERRORS = {
+    validationError:'ValidationError'
+   } 
+
+   static SERVER_MESSAGES_ERROR = {
+       messageErrorServer:'Error en el servidor, Intentalo mas tarde',
+       noAuthorization:'Sesión no autorizada'
+   }
+
+   static  FORM_MESSAGE_ERROR = {
+    dataIncorrect:'Datos Incorrectos',
+    requiredField:'Campo requerido',
+    dataStringIncorrect:'Dato Incorrecto',
+    invalidData:'Dato Invalido',
+    messageIdentificationLength:"Mínimo 2 caracteres y máximo 15 caracteres"
+   }
+
+    static CODES={
+        C200:200,
+        C299:299,
+        C300:300,
+        C399:399,
+        C400:400, 
+        C499:499,
+        CERO:0,
+        C501:501,
+        C401:401
+    }
+
     static BOTTONS = {
-        ACCEPT:'Aceptar',
-        SAVE:'Guardar',
-        UPDATE:'Actualizar'
+        accept:'Aceptar',
+        save:'Guardar',
+        update:'Actualizar'
     }
     static ROUTES={
         private:'/'
     }
-    static TYPENOTIFiCATION = {
-        SUCCESS:'success',
-        WARNING:'warning',
-        ERROR:'error'
+    static TYPE_NOTIFiCATION = {
+        success:'success',
+        warning:'warning',
+        error:'error'
     };
-    static MINLENGTHPASSWORD = 8;
-    static MAXLENGTHPASSWORD = 10;
-    static MINLENGTHIDENTIFICATION = 2;
-    static MESSAGEIDENTIFICATIONLENGTH = "Mínimo 2 caracteres y máximo 15 caracteres";
-    static MAXLENGTHIDENTIFICATION = 15;
-    static REGULAREXPRESSION = {
-        NAMESWITHSPACE:'[a-zA-ZÑñÁáÉéÍíÓóÚú ]*',
-        NAMESWITHOUTSPACE:'[a-zA-ZÑñÁáÉéÍíÓóÚú]*',
-        IDENTIFICATIONONLYNUMBER:'^([0-9])*$',
-        STRINGONLYNUMBER:'[0-9]*'
+    static MESSAGES_NOTIFICATION = {
+        successRegister:'El registro se realizo  con éxito',
+        sucessUpdate:'La actualización se realizo con éxito',
+        errorRegister:'No se pudo realizar el registro, intentalo mas tarde',
+        errorUpdate:'No se pudo realizar la actualización, intentalo mas tarde'
+    } 
+
+    static LENGTH = {
+        minLengthPassword:8,
+        maxLengthPassword:10,
+        minLengthIdentification:2,
+        maxLengthIdentification:15
     }
-    static NAMESNOTIFICACIONES = {
-        REGISTER:"Registro",
-        UPDATE:"Actualización"
+
+    static REGULAR_EXPRESSION = {
+        namesWithSpace:'[a-zA-ZÑñÁáÉéÍíÓóÚú ]*',
+        namesWithOutSpace:'[a-zA-ZÑñÁáÉéÍíÓóÚú]*',
+        identificationOnlyNumber:'^([0-9])*$',
+        stringOnlyNumber:'[0-9]*'
+    }
+    static NAMES_NOTIFICACIONES = {
+        register:"Registro",
+        update:"Actualización"
     }
     static VALIDATORS={
-        CHARACTERSNUMBERSLINE:{name:"charactersNumbersLine",message:"Minimmo 2 caracteres, El campo solo permite letras al inicio, conbinaciones alfanuméricas y el simbolo (-)"},
-        REQUIRED:{name:"required",message:"El campo es requerido"},
-        MINLENGTH:{name:"minlength",message:"No cumple la longitud de",other:'caracteres'},
-        MAXLENGTH:{name:"maxlength",message:"Solo es permitodo máximo",other:'caracteres'},
-        ROUTEEXISTS:{name:"routeExists",message:"El nombre de la ruta ya existe"}
+        characteresNumbersLine:{name:"charactersNumbersLine",message:"Minimmo 2 caracteres, El campo solo permite letras al inicio, conbinaciones alfanuméricas y el simbolo (-)"},
+        required:{name:"required",message:"El campo es requerido"},
+        minLength:{name:"minlength",message:"No cumple la longitud de",other:'caracteres'},
+        maxLength:{name:"maxlength",message:"Solo es permitodo máximo",other:'caracteres'},
+        routExists:{name:"routeExists",message:"El nombre de la ruta ya existe"}
     }
 }

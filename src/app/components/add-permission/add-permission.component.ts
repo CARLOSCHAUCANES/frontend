@@ -52,17 +52,20 @@ export  class AddPermissionComponent implements OnInit{
   });
   //to call variables type @ViewChild
   
-  constructor(private authService:AuthService,private notification:NotificacionService,elem:ElementRef,private render2:Renderer2,private fb: FormBuilder,private validate:ValidationsService,private route:ActivatedRoute) {
+  constructor(
+    private authService:AuthService,
+    private notification:NotificacionService,
+    elem:ElementRef,
+    private render2:Renderer2,
+    private fb: FormBuilder,
+    private validate:ValidationsService,
+    private route:ActivatedRoute) {
   }
   ngOnInit(): void {  
     this.authService.getProfiles().subscribe(res=>{
       this.profiles = res.response;
     })  
     this.getListPermissions();
-    /*
-    let urlActive = localStorage.getItem("urlActive");
-    console.log(urlActive);
-    this.authService.getPermission(urlActive+"").subscribe(p=>{console.log(p)});*/
   }
 
 getListPermissions(){
@@ -98,20 +101,20 @@ getListPermissions(){
     const formA = new FormArray([]);
     this.profilesSelected = this.permissionformGroup.get('profiles')?.value;
     if(this.profilesSelected?.length == 0){
-      this.notification.createNotification1(CO.TYPENOTIFiCATION.WARNING,CO.NAMESNOTIFICACIONES.REGISTER,PC.NoSELECTEDPROFILES);
+      this.notification.createNotification1(CO.TYPE_NOTIFiCATION.warning,CO.NAMES_NOTIFICACIONES.register,PC.MESSAGES_ERROR.NoSelectedProfile);
       this.isOkLoading = false;
       return;
     }
     this.authService.savePermission(this.permissionformGroup.getRawValue()).subscribe(res=>{
-      if(res.status = CO.C200){
-        this.notification.createNotification1(CO.TYPENOTIFiCATION.SUCCESS,CO.NAMESNOTIFICACIONES.REGISTER,CO.REGISTERSUCCESS);
+      if(res.status = CO.CODES.C200){
+        this.notification.createNotification1(CO.TYPE_NOTIFiCATION.success,CO.NAMES_NOTIFICACIONES.register,CO.MESSAGES_NOTIFICATION.successRegister);
         this.getListPermissions();
         this.isVisible = false;
         this.isOkLoading = false;
       }
       else
       {
-        this.notification.createNotification1(CO.TYPENOTIFiCATION.ERROR,CO.NAMESNOTIFICACIONES.REGISTER,CO.REGISTERERROR);
+        this.notification.createNotification1(CO.TYPE_NOTIFiCATION.error,CO.NAMES_NOTIFICACIONES.register,CO.MESSAGES_NOTIFICATION.errorRegister);
       }
     })
   }
@@ -123,15 +126,15 @@ getListPermissions(){
       return;
     }
     this.authService.updatePermission(this.permissionformGroup.getRawValue()).subscribe(res=>{
-      if(res.status = CO.C200){
-        this.notification.createNotification1(CO.TYPENOTIFiCATION.SUCCESS,CO.NAMESNOTIFICACIONES.REGISTER,CO.REGISTERUPDATE);
+      if(res.status = CO.CODES.C200){
+        this.notification.createNotification1(CO.TYPE_NOTIFiCATION.success,CO.NAMES_NOTIFICACIONES.update,CO.MESSAGES_NOTIFICATION.sucessUpdate);
         this.getListPermissions();
         this.isVisible = false;
         this.isOkLoading = false;
       }
       else
       {
-        this.notification.createNotification1(CO.TYPENOTIFiCATION.ERROR,CO.NAMESNOTIFICACIONES.REGISTER,CO.REGISTERERROR);
+        this.notification.createNotification1(CO.TYPE_NOTIFiCATION.error,CO.NAMES_NOTIFICACIONES.update,CO.MESSAGES_NOTIFICATION.errorUpdate);
       }
     })
   }
@@ -140,7 +143,7 @@ getListPermissions(){
     this.isModalRegister = true;
     this.isModalUpdate = false;
     this.isVisible = true;
-    this.titleModal =PC.MODAL.TITLEMODALREGISTER;
+    this.titleModal =PC.MODAL.titleModalRegister;
     this.permissionformGroup.reset();
     this.listProfiles = [];
   }
@@ -163,7 +166,7 @@ getListPermissions(){
     this.permissionSelected1 = permission;
     this.isModalRegister = false;
     this.isModalUpdate = true;
-    this.titleModal = PC.MODAL.TITLEMODALUPDATE;
+    this.titleModal = PC.MODAL.titleModalUpdate;
     this.permissionformGroup.get("_id")?.setValue(""+permission._id);
     this.permissionformGroup.get("route")?.setValue(""+permission.route);
     this.permissionformGroup.get("description")?.setValue(""+permission.description);

@@ -15,7 +15,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzModalModule} from 'ng-zorro-antd/modal';
-
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 const ngZorroConfig: NzConfig = {
@@ -42,7 +42,7 @@ const ngZorroConfig: NzConfig = {
     NzSpinModule,
     NzCheckboxModule,
     NzModalModule,
-
+    NzDividerModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES },

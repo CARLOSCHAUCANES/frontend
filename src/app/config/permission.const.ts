@@ -7,7 +7,7 @@ export class PermissionConst{
         NoSelectedProfile:"No se ha seleccionado ningún perfil"
     }
     
-    static FORMS = [
+    static FORMS = 
         {
             name:"permissionformGroup",
             controls:[
@@ -16,6 +16,6 @@ export class PermissionConst{
                 {control:"profiles",validators:['required']}
             ]
        }
-    ]
+    
     
 }

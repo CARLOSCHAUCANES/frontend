@@ -21,4 +21,20 @@ export class UserConst{
         minLengthPassword:'La contraseña mínimo debe contener 8 caracteres',
         passwordNotSame:'Las contraseñas no coinciden'
     }
+    static FORM = 
+        {
+            name:"userformGroup",
+            controls:[
+                {control:"cedula",validators:['required']},
+                {control:"name",validators:['required']},
+                {control:"lastName",validators:['required']},
+                {control:"email",validators:['required']},
+                {control:"phone",validators:['required']},
+                {control:"address",validators:['required']},
+                {control:"password",validators:['required']},
+                {control:"confirm",validators:['required']},
+                {control:"profile",validators:['required']}
+            ]
+       }
+    
 }

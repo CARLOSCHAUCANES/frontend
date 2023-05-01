@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Renderer2, ElementRef,OnInit,ViewChildren,QueryList } from '@angular/core';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {AuthService} from './../../services/auth.service'
-import { FormGroup,FormBuilder,FormControl } from '@angular/forms';
+import { FormGroup,FormBuilder,FormControl, Validators } from '@angular/forms';
 import { User } from 'src/app/interfaces/User';
 import { Profile} from 'src/app/interfaces/Profile';
 import { EncryptionService } from 'src/app/services/encryption.service';
 import { NotificacionService } from 'src/app/services/notificacion.service';
 import { ConfigConst as CC } from 'src/app/config/config.const';
 import { UserConst as  UC } from 'src/app/config/user.const';
+import { ValidationsService } from 'src/app/services/validations.service';
+
 
 @Component({
   selector: 'app-list-users',
@@ -16,6 +18,8 @@ import { UserConst as  UC } from 'src/app/config/user.const';
 })
 
 export class ListUsersComponent implements OnInit {
+  //variables html
+  @ViewChildren('route') vRoutes?: QueryList<ElementRef<HTMLDivElement>>;
   //modal variables
   isVisible = false;
   isOkLoading = false;
@@ -31,14 +35,30 @@ export class ListUsersComponent implements OnInit {
   public listProfiles:Profile[] = [];
   public listOfData: User[] = [];
   //form variables
-  public cedulaFormControl = new FormControl("",{});
-  public nameFormControl = new FormControl("",{});
-  public lastNameFormControl = new FormControl("",{});
-  public emailFormControl = new FormControl("",{});
-  public phoneFormControl = new FormControl("",{});
-  public addressFormControl = new FormControl("",{});
-  public passwordFormControl = new FormControl("",{});
-  public profileFormControl = new FormControl("",{});
+  public cedulaFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public nameFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public lastNameFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public emailFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public phoneFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public addressFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public passwordFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
+  public profileFormControl = new FormControl("",{
+    validators:[Validators.required]
+  });
 
   public userformGroup = new FormGroup({
     cedula:this.cedulaFormControl,
@@ -57,7 +77,10 @@ export class ListUsersComponent implements OnInit {
     private authService:AuthService,
     private fb: FormBuilder,
     private encrypt:EncryptionService,
-    private notification:NotificacionService) { }
+    private notification:NotificacionService,
+    private validate:ValidationsService,
+    elem:ElementRef,
+    private render2:Renderer2,) { }
   
 
   ngOnInit(): void {
@@ -102,6 +125,10 @@ showModalNewUser()
 }
 
 saveUser(){
+  if(!this.userformGroup.valid){
+    this.validateFormUser();
+    return;
+  }
   const user = this.userformGroup.getRawValue();
   let passwordEncry = this.encrypt.encryptText(this.userformGroup.get("password")?.value+"");
   user.password = passwordEncry;
@@ -124,6 +151,11 @@ saveUser(){
   )
   ;
 }
+
+validateFormUser(){
+  this.validate.validateForm(this.userformGroup,this.vRoutes!,UC.FORM.name,this.render2);
+}
+
 
 
 showModalEditUser(user:User){

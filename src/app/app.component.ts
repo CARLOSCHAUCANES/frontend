@@ -21,7 +21,7 @@ export class AppComponent implements OnInit{
 
     this.authService.checkAuthorization().subscribe(
       res=>{
-        if(res.status == CONFIG.CODES.C401){
+        if(res.status == CONFIG.CODES.C200){
         }
       },
       err=>{
